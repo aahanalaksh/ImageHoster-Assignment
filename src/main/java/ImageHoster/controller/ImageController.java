@@ -49,6 +49,7 @@ public class ImageController {
     //Also now you need to add the tags of an image in the Model type object
     //Here a list of tags is added in the Model type object
     //this list is then sent to 'images/image.html' file and the tags are displayed
+    //By fetching image using Id will enusre the bug related to image details retrieval with same name/title is resolved
     @RequestMapping("/images/{id}/{title}")
     public String showImage(@PathVariable("id") Integer id, @PathVariable("title") String title, Model model) {
         Image image = imageService.getImage(id);
