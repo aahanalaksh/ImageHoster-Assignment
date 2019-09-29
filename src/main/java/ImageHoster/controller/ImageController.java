@@ -106,20 +106,21 @@ public class ImageController {
         User user = (User) session.getAttribute("loggeduser");
         Integer requestUserId = user.getId();
         if (userId.equals(requestUserId)) {
+            String tags = convertTagsToString(image.getTags());
+            model.addAttribute("image", image);
+            model.addAttribute("tags", tags);
+            model.addAttribute("comments", image.getComments());
+            return "images/edit";
+
+        } else {
             String error = "Only the owner of the image can edit the image";
             model.addAttribute("editError", error);
             model.addAttribute("image", image);
             model.addAttribute("tags", image.getTags());
             model.addAttribute("comments", image.getComments());
             return "images/image";
-
-        } else {
-            String tags = convertTagsToString(image.getTags());
-            model.addAttribute("image", image);
-            model.addAttribute("tags", tags);
-            model.addAttribute("comments", image.getComments());
-            return "images/edit";
         }
+
 
     }
 
@@ -188,16 +189,16 @@ public class ImageController {
         User user = (User) session.getAttribute("loggeduser");
         Integer requestUserId = user.getId();
         if (userId.equals(requestUserId)) {
+            imageService.deleteImage(imageId);
+            return "redirect:/images";
+
+        } else {
             String error = "Only the owner of the image can delete the image";
             model.addAttribute("deleteError", error);
             model.addAttribute("image", image);
             model.addAttribute("tags", image.getTags());
             model.addAttribute("comments", image.getComments());
             return "images/image";
-
-        } else {
-            imageService.deleteImage(imageId);
-            return "redirect:/images";
         }
 
     }
