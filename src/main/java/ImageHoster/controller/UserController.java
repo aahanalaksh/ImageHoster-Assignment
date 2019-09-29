@@ -91,7 +91,7 @@ public class UserController {
         return "index";
     }
 
-
+//passwordCheck to validate the password strength used for registration
     public boolean passwordCheck(String pwd) {
         boolean numberCheck = false;
         boolean alphabetCheck = false;
