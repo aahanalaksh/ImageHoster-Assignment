@@ -28,15 +28,15 @@ public class CommentController {
     private ImageService imageService;
 
     @RequestMapping(value = "/image/{id}/{title}/comments", method = RequestMethod.POST)
-    public String createComment(@PathVariable("id") Integer imgId, @PathVariable("title") String title, @RequestParam("comment") String textStr, HttpSession session) {
+    public String createComment(@PathVariable("id") Integer imageId, @PathVariable("title") String title, @RequestParam("comment") String text, HttpSession session) {
         User user = (User) session.getAttribute("loggeduser");
         Comment comment = new Comment();
-        comment.setImage(imageService.getImage(imgId));
-        comment.setText(textStr);
+        comment.setImage(imageService.getImage(imageId));
+        comment.setText(text);
         comment.setUser(user);
         comment.setCreatedDate(LocalDate.now());
         commentService.insertComment(comment);
-        return "redirect:/images/" + imgId + "/" + title;
+        return "redirect:/images/" + imageId + "/" + title;
     }
 
 }
